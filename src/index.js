@@ -26,8 +26,7 @@ const numWords = {
   60: 'sixty',
   70: 'seventy',
   80: 'eighty',
-  90: 'ninety',
-  100: 'hundred'
+  90: 'ninety'
 }
 module.exports = function toReadable(number) {
 
@@ -35,29 +34,27 @@ module.exports = function toReadable(number) {
     let decade = Math.trunc(number / 10) * 10;
     let remainder = number % 10;
     if (Number.isInteger(number / 10)) {
-      let shortNumber = numWords[decade];
-      return shortNumber;
+      return numWords[decade];
+
     } else {
-      let stringNumber = numWords[decade] + " " + numWords[remainder];
-      return stringNumber;
+      return `${numWords[decade]} ${numWords[remainder]}`;
     }
   }
 
   if (number >= 100 && number < 1000) {
     let century = Math.trunc(number / 100);
     if (Number.isInteger(number / 100)) {
-      let shortNumber = numWords[century] + ' ' + 'hundred';
-      return shortNumber;
+      return `${numWords[century]} hundred`;
+
     } else if ((number % 100) < 20 || Number.isInteger(number / 10)) {
       let decade = number % 100;
-      let firstString = numWords[century] + ' ' + 'hundred ' + numWords[decade];
-      return firstString;
+      return `${numWords[century]} hundred ${numWords[decade]}`;
+
     } else {
-      let decade = (number % 100);
-      let fullDecade = Math.trunc((decade / 10)) * 10;
+      let decade = number % 100;
+      let fullDecade = Math.trunc(decade / 10) * 10;
       let remainder = decade % 10;
-      let secondString = numWords[century] + ' ' + 'hundred ' + numWords[fullDecade] + ' ' + numWords[remainder];
-      return secondString;
+      return `${numWords[century]} hundred ${numWords[fullDecade]} ${numWords[remainder]}`;
     }
   }
   return numWords[number];
